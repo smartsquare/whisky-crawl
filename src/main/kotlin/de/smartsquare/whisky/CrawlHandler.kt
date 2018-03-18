@@ -19,9 +19,7 @@ class CrawlHandler : RequestHandler<Any, Any> {
         val paginationLinksFromBaseUrl = crawler.extractPaginationLinksFromBaseUrl(baseUrl)
 
         val allWhiskys: List<List<Whisky>> = paginationLinksFromBaseUrl
-                .parallelStream() // not real kotlin parallel streams TODO need to check coroutins
                 .map { subLink -> crawler.crawl(subLink) }
-                .collect(Collectors.toList())
 
         val whiskyList = allWhiskys.flatten()
 
