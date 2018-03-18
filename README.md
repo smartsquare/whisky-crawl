@@ -15,7 +15,7 @@ This sample includes:
 * pom.xml - this file is the Maven Project Object Model for the web service
 * src/main - this directory contains your Java service source files
 * src/test - this directory contains your Java service unit test files
-* template.yml - this file contains the AWS Serverless Application Model (AWS SAM) used
+* template.yml - this file contains the AWS Serverless de.smartsquare.whisky.Application Model (AWS SAM) used
   by AWS CloudFormation to deploy your application to AWS Lambda and Amazon API
   Gateway.
 
@@ -45,7 +45,7 @@ Learn more about managing Maven dependencies with AWS SDK for Java using the
 Learn more about AWS CodeBuild and how it builds and tests your application here:
 https://docs.aws.amazon.com/codebuild/latest/userguide/concepts.html
 
-Learn more about AWS Serverless Application Model (AWS SAM) and how it works here:
+Learn more about AWS Serverless de.smartsquare.whisky.Application Model (AWS SAM) and how it works here:
 https://github.com/awslabs/serverless-application-model/blob/master/HOWTO.md
 
 AWS Lambda Developer Guide:
