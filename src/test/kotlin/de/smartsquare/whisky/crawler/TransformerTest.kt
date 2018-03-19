@@ -1,7 +1,7 @@
 package de.smartsquare.whisky.crawler
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
 class TransformerTest {

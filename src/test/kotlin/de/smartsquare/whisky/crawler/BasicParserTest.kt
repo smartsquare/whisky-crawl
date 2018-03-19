@@ -2,7 +2,7 @@ package de.smartsquare.whisky.crawler
 
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Jsoup
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.io.File
 import java.nio.charset.StandardCharsets
 
