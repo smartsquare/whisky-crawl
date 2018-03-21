@@ -1,6 +1,7 @@
 package de.smartsquare.whisky.dynamo
 
 import com.amazonaws.client.builder.AwsClientBuilder
+import com.amazonaws.regions.Regions
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.dynamodbv2.document.DynamoDB
 import com.amazonaws.services.dynamodbv2.document.Item
@@ -17,7 +18,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
 
     companion object Factory {
         fun create(): DynamoDB = DynamoDB(AmazonDynamoDBClientBuilder.standard()
-                .withEndpointConfiguration(AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-west-2"))
+                .withRegion(Regions.US_EAST_2)
                 .build())
 
         val log = LoggerFactory.getLogger(DynamoDbClient::class.java.simpleName)
