@@ -25,7 +25,7 @@ class WhiskyWorldKrakenTest {
     @Before
     fun setUp() {
         every { jsoup.readWebPage(any()) } returns Document("foo://baa")
-        every { parser.getPaginationLinks(any()) } returns listOf("subLink1","subLink2")
+        every { parser.getPaginationLinks(any()) } returns listOf("subLink1", "subLink2")
         every { parser.readWhiskyListFromHtmlDocument(any()) } returns listOf(WhiskyTestData.whisky1, WhiskyTestData.whisky2)
     }
 

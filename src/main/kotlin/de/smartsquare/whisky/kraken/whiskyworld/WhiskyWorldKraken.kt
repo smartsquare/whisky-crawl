@@ -3,12 +3,10 @@ package de.smartsquare.whisky.kraken.whiskyworld
 import de.smartsquare.whisky.domain.Whisky
 import de.smartsquare.whisky.jsoup.JsoupWrapper
 import de.smartsquare.whisky.kraken.Kraken
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import java.util.stream.Collectors
 
 class WhiskyWorldKraken(val parser: WhiskyWorldParser = WhiskyWorldParser(),
-                        val jsoup: JsoupWrapper = JsoupWrapper()): Kraken {
+                        val jsoup: JsoupWrapper = JsoupWrapper()) : Kraken {
 
     val baseUrl = "https://www.whiskyworld.de/alle-whiskies"
 
@@ -29,7 +27,6 @@ class WhiskyWorldKraken(val parser: WhiskyWorldParser = WhiskyWorldParser(),
         val doc = jsoup.readWebPage(subLink)
         return parser.readWhiskyListFromHtmlDocument(doc)
     }
-
 
 
 }
