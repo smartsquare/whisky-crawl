@@ -1,6 +1,6 @@
 package de.smartsquare.whisky.kraken.whiskyworld
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -20,8 +20,8 @@ class WhiskyWorldParserTest {
         val whiskyList = parser.readWhiskyListFromHtmlDocument(document)
 
         // then
-        Assertions.assertThat(whiskyList).isNotNull
-        Assertions.assertThat(whiskyList).hasSize(36)
+        assertThat(whiskyList).isNotNull
+        assertThat(whiskyList).hasSize(36)
     }
 
     @Test
@@ -34,10 +34,10 @@ class WhiskyWorldParserTest {
         val paginationLinks = parser.getPaginationLinks(document)
 
         // then
-        Assertions.assertThat(paginationLinks).isNotEmpty
-        Assertions.assertThat(paginationLinks).hasSize(28)
-        Assertions.assertThat(paginationLinks).contains(html.absolutePath + "?page=1")
-        Assertions.assertThat(paginationLinks).contains(html.absolutePath + "?page=28")
+        assertThat(paginationLinks).isNotEmpty
+        assertThat(paginationLinks).hasSize(28)
+        assertThat(paginationLinks).contains(html.absolutePath + "?page=1")
+        assertThat(paginationLinks).contains(html.absolutePath + "?page=28")
 
     }
 }
