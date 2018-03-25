@@ -1,4 +1,4 @@
-package de.smartsquare.whisky.crawler
+package de.smartsquare.whisky.kraken.whiskyworld
 
 import de.smartsquare.whisky.domain.Whisky
 import org.jsoup.nodes.Element

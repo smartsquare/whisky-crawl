@@ -1,9 +1,9 @@
-package de.smartsquare.whisky.crawler
+package de.smartsquare.whisky.kraken.whiskyworld
 
 import de.smartsquare.whisky.domain.Whisky
 import org.jsoup.nodes.Document
 
-class BasicParser(val transformer: Transformer) {
+class WhiskyWorldParser(val transformer: Transformer = Transformer()) {
 
     fun readWhiskyListFromHtmlDocument(document: Document): List<Whisky> {
         val products = document.select(".product-item a")
@@ -32,5 +32,4 @@ class BasicParser(val transformer: Transformer) {
 
         return links
     }
-
 }

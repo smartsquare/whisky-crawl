@@ -101,6 +101,13 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>1.7.15</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

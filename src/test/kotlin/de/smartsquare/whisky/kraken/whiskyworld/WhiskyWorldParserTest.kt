@@ -1,14 +1,14 @@
-package de.smartsquare.whisky.crawler
+package de.smartsquare.whisky.kraken.whiskyworld
 
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-class BasicParserTest {
+class WhiskyWorldParserTest {
 
-    val parser = BasicParser(Transformer())
+    val parser = WhiskyWorldParser(Transformer())
 
     @Test
     fun should_parse_html_page() {
@@ -20,8 +20,8 @@ class BasicParserTest {
         val whiskyList = parser.readWhiskyListFromHtmlDocument(document)
 
         // then
-        assertThat(whiskyList).isNotNull
-        assertThat(whiskyList).hasSize(36)
+        Assertions.assertThat(whiskyList).isNotNull
+        Assertions.assertThat(whiskyList).hasSize(36)
     }
 
     @Test
@@ -34,10 +34,10 @@ class BasicParserTest {
         val paginationLinks = parser.getPaginationLinks(document)
 
         // then
-        assertThat(paginationLinks).isNotEmpty
-        assertThat(paginationLinks).hasSize(28)
-        assertThat(paginationLinks).contains(html.absolutePath + "?page=1")
-        assertThat(paginationLinks).contains(html.absolutePath + "?page=28")
+        Assertions.assertThat(paginationLinks).isNotEmpty
+        Assertions.assertThat(paginationLinks).hasSize(28)
+        Assertions.assertThat(paginationLinks).contains(html.absolutePath + "?page=1")
+        Assertions.assertThat(paginationLinks).contains(html.absolutePath + "?page=28")
 
     }
 }
