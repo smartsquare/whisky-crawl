@@ -1,8 +1,8 @@
 package de.smartsquare.whisky.kraken.whiskyworld
 
 import de.smartsquare.whisky.domain.Whisky
+import org.apache.logging.log4j.LogManager
 import org.jsoup.nodes.Element
-import org.slf4j.LoggerFactory
 import java.math.BigDecimal
 import java.time.Instant
 
@@ -11,9 +11,7 @@ import java.time.Instant
  */
 class Transformer {
 
-    companion object {
-        val log = LoggerFactory.getLogger(Transformer::class.java.simpleName)
-    }
+    val log = LogManager.getLogger()
 
     fun transform(product: Element): Whisky {
 

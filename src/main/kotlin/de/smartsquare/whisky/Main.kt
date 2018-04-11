@@ -1,14 +1,12 @@
 package de.smartsquare.whisky
 
 import de.smartsquare.whisky.kraken.wishkyde.WhiskyKraken
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 
 /**
  * Main script to start crawling locally
  */
-
-val log = LoggerFactory.getLogger("Main")
-
+val log = LogManager.getLogger()
 fun main(args: Array<String>) {
     val whiskyKraken = WhiskyKraken()
 

@@ -3,7 +3,7 @@ package de.smartsquare.whisky.kraken
 import de.smartsquare.whisky.kraken.noop.NoOpKraken
 import de.smartsquare.whisky.kraken.whiskyworld.WhiskyWorldKraken
 import de.smartsquare.whisky.kraken.wishkyde.WhiskyDeKraken
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 
 /**
  *
@@ -12,7 +12,7 @@ class KrakenFactory {
 
     companion object {
 
-        val log = LoggerFactory.getLogger(this::class.java.simpleName)
+        val log = LogManager.getLogger()
 
         fun getMonsterOfTheSea(krakenName: String): Kraken {
             when (krakenName) {

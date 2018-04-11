@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap
 import com.amazonaws.services.dynamodbv2.model.*
 import de.smartsquare.whisky.domain.Whisky
-import org.slf4j.LoggerFactory
+import org.apache.logging.log4j.LogManager
 import java.math.BigDecimal
 import java.time.Instant
 
@@ -20,9 +20,10 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
                 .withRegion(Regions.US_EAST_2)
                 .build())
 
-        val log = LoggerFactory.getLogger(DynamoDbClient::class.java.simpleName)
         val tableName = "WhiskyPriceEvolution"
     }
+
+    val log = LogManager.getLogger()
 
     fun deleteExistingTable() {
         try {
@@ -31,7 +32,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
             table.delete()
             table.waitForDelete()
         } catch (e: ResourceNotFoundException) {
-            log.trace("$tableName does not exist")
+            log.debug("$tableName does not exist")
         }
     }
 
