@@ -57,6 +57,5 @@ class DynamoDbClientTest {
         val items = dynamo.readItem("Aberlour 16 Jahre Double Cask Matured")
         assertThat(items).isNotNull
         assertThat(items).hasSize(1)
-
     }
 }

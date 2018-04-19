@@ -3,11 +3,11 @@ package de.smartsquare.whisky.kraken.whiskyworld
 import de.smartsquare.whisky.domain.Whisky
 import org.jsoup.nodes.Document
 
-class WhiskyWorldParser(val transformer: Transformer = Transformer()) {
+class WhiskyWorldParser(val transformer: WhiskyWorldTransformer = WhiskyWorldTransformer()) {
 
     fun readWhiskyListFromHtmlDocument(document: Document): List<Whisky> {
         val products = document.select(".product-item a")
-        return products.map { product -> transformer.transform(product) }.toList()
+        return products.map { product -> transformer.transform(product) }.toList().filterNotNull()
     }
 
     fun getPaginationLinks(document: Document): List<String> {
@@ -16,7 +16,6 @@ class WhiskyWorldParser(val transformer: Transformer = Transformer()) {
         val paginationLinkTemplate = paginationLinks
                 .map { link -> link.attr("href") }
                 .first()
-
 
         val highestPageNo = paginationLinks
                 .map { link -> link.attr("href") }

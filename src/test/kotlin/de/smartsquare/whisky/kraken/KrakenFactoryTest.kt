@@ -1,8 +1,8 @@
 package de.smartsquare.whisky.kraken
 
 import de.smartsquare.whisky.kraken.noop.NoOpKraken
+import de.smartsquare.whisky.kraken.whiskyde.WhiskyDeKraken
 import de.smartsquare.whisky.kraken.whiskyworld.WhiskyWorldKraken
-import de.smartsquare.whisky.kraken.wishkyde.WhiskyDeKraken
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -28,5 +28,4 @@ class KrakenFactoryTest {
         val kraken = KrakenFactory.getMonsterOfTheSea("FooBaa")
         assertThat(kraken).isInstanceOf(NoOpKraken::class.java)
     }
-
 }

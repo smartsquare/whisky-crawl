@@ -1,15 +1,17 @@
-package de.smartsquare.whisky.kraken.wishkyde
+package de.smartsquare.whisky.kraken
 
 import de.smartsquare.whisky.domain.Whisky
-import de.smartsquare.whisky.kraken.KrakenFactory
+import de.smartsquare.whisky.util.parallelFlatMap
 
-class WhiskyKraken() {
+class WhiskyKraken {
 
-    fun collectWhiskyInformationFrom(whiskySiteIdentifier: String): List<Whisky> {
-        val kraken = KrakenFactory.getMonsterOfTheSea(whiskySiteIdentifier)
-        return kraken.crawlWhiskyPage()
+    fun collectWhiskyInformationFrom(vararg whiskySiteIdentifiers: String): List<Whisky> {
+        return whiskySiteIdentifiers.toList().parallelFlatMap {
+            val kraken = KrakenFactory.getMonsterOfTheSea(it)
+
+            kraken.crawlWhiskyPage()
+        }
     }
-
 }
 
 

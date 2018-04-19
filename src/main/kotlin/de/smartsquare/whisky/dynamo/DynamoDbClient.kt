@@ -6,12 +6,16 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB
 import com.amazonaws.services.dynamodbv2.document.Item
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap
-import com.amazonaws.services.dynamodbv2.model.*
+import com.amazonaws.services.dynamodbv2.model.AttributeDefinition
+import com.amazonaws.services.dynamodbv2.model.KeySchemaElement
+import com.amazonaws.services.dynamodbv2.model.KeyType
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput
+import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException
+import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType
 import de.smartsquare.whisky.domain.Whisky
 import org.apache.logging.log4j.LogManager
 import java.math.BigDecimal
 import java.time.Instant
-
 
 class DynamoDbClient(val dynamoDB: DynamoDB) {
 
@@ -37,7 +41,6 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
     }
 
     fun createInitialTable() {
-
         log.info("Attempting to create table; please wait...")
 
         val table = dynamoDB.createTable(tableName,
@@ -55,12 +58,10 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
 
         table.waitForActive()
 
-        log.info("Success.  Table status: {}", table.getDescription().getTableStatus())
-
+        log.info("Success.  Table status: {}", table.description.tableStatus)
     }
 
     fun write(whisky: Whisky) {
-
         val table = dynamoDB.getTable(tableName)
 
         val name = whisky.name
@@ -73,8 +74,8 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
                 .withPrimaryKey("id_name", key, "id_scrapingDate", scrappingMillis)
                 .withString("whiskyName", name)
                 .withString("description", description)
-                .withDouble("alcohol", whisky.alcohol)
-                .withDouble("liter", whisky.liter)
+                .apply { if (whisky.alcohol != null) withDouble("alcohol", whisky.alcohol) }
+                .apply { if (whisky.liter != null) withDouble("liter", whisky.liter) }
                 .withDouble("price", whisky.price.toDouble()))
 
         log.info("PutItem succeeded: $name ")
@@ -102,8 +103,5 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
                     Instant.ofEpochMilli(item.getString("id_scrapingDate").toLong())
             )
         }.toList()
-
     }
-
-
 }
