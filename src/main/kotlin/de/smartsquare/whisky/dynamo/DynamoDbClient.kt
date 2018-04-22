@@ -21,7 +21,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
 
     companion object Factory {
         fun create(): DynamoDB = DynamoDB(AmazonDynamoDBClientBuilder.standard()
-                .withRegion(Regions.US_EAST_2)
+                .withRegion(Regions.EU_CENTRAL_1)
                 .build())
 
         val tableName = "WhiskyPriceEvolution"
