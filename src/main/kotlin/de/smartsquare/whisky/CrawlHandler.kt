@@ -7,20 +7,29 @@ import de.smartsquare.whisky.kraken.WhiskyKraken
 import org.apache.logging.log4j.LogManager
 import org.json.JSONObject
 
-class CrawlHandler : RequestHandler<Any, Any> {
+class CrawlHandler : RequestHandler<String, Any> {
 
     val log = LogManager.getLogger()
 
-    override fun handleRequest(input: Any?, ctx: Context?): Any {
-        log.info("Starting Whisky Crawler§")
+    override fun handleRequest(input: String?, ctx: Context?): Any {
+        log.info("Starting Whisky Crawler")
+
+        val headers = hashMapOf("Content-Type" to "application/json")
+        if(input == null || input.isBlank()) {
+            return GatewayResponse(
+                    JSONObject().put("Output", "No crawler destination specified.").toString(),
+                    headers,
+                    400)
+        }
+
+
 
         val whiskyKraken = WhiskyKraken()
         val dynamo = DynamoDbClient(DynamoDbClient.create())
 
-        val whiskyList = whiskyKraken.collectWhiskyInformationFrom("WhiskyWorld", "WhiskyDe")
+        val whiskyList = whiskyKraken.collectWhiskyInformationFrom(input)
         whiskyList.forEach { whisky -> dynamo.write(whisky) }
 
-        val headers = hashMapOf("Content-Type" to "application/json")
 
         return GatewayResponse(
                 JSONObject().put("Output", JSONObject.valueToString(whiskyList)).toString(),

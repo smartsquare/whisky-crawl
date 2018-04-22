@@ -11,6 +11,13 @@ val log = LogManager.getLogger()
 fun main(args: Array<String>) {
     val whiskyKraken = WhiskyKraken()
 
-    val whiskyList = whiskyKraken.collectWhiskyInformationFrom("WhiskyWorld", "WhiskyDe")
-    whiskyList.forEach { whisky -> log.info(whisky.toString()) }
+    log.info("Crawling Whisky world")
+
+    val whiskyWorldList = whiskyKraken.collectWhiskyInformationFrom("WhiskyWorld")
+    whiskyWorldList.forEach { whisky -> log.info(whisky.toString()) }
+
+    log.info("Crawling Whisky.de")
+
+    val whiskyDeList = whiskyKraken.collectWhiskyInformationFrom("WhiskyDe")
+    whiskyDeList.forEach { whisky -> log.info(whisky.toString()) }
 }
