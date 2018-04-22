@@ -19,7 +19,7 @@ class WhiskyWorldTransformer {
 
             val (liter, alcohol) = contents.split("/").let { it.first() to it.last() }
 
-            WhiskyTransformer.transform(name, description, liter, alcohol, price, "whisky world")
+            WhiskyTransformer.transform(name, description, liter, alcohol, price, "WhiskyWorld")
         } catch (e: NullPointerException) {
             null
         }
