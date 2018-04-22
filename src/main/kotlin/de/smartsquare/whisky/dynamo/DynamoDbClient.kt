@@ -100,7 +100,8 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
                     item.getDouble("alcohol"),
                     item.getDouble("liter"),
                     BigDecimal.valueOf(item.getDouble("price")),
-                    Instant.ofEpochMilli(item.getString("id_scrapingDate").toLong())
+                    Instant.ofEpochMilli(item.getString("id_scrapingDate").toLong()),
+                    item.getString("source")
             )
         }.toList()
     }

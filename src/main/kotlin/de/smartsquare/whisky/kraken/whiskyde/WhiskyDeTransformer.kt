@@ -17,7 +17,7 @@ class WhiskyDeTransformer {
             val liter = product.select(".article-amount > span").getOrNull(0)?.text()
             val price = product.selectFirst(".article-price-default").text()
 
-            WhiskyTransformer.transform(name, description, liter, alcohol, price)
+            WhiskyTransformer.transform(name, description, liter, alcohol, price, "whisky.de")
         } catch (e: NullPointerException) {
             null
         }

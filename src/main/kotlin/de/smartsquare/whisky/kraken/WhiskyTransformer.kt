@@ -9,13 +9,13 @@ import java.time.Instant
  */
 object WhiskyTransformer {
 
-    fun transform(name: String, description: String, liter: String?, alcohol: String?, price: String): Whisky {
+    fun transform(name: String, description: String, liter: String?, alcohol: String?, price: String, source: String): Whisky {
         val parsedAlcohol = alcohol?.trim()?.toLowerCase()?.removeSuffix("% vol")?.trim()?.replace(",", ".")?.toDouble()
         val parsedLiter = liter?.trim()?.toLowerCase()?.removeSuffix("liter")?.trim()?.replace(",", ".")?.toDouble()
 
         val parsedPrice = normalizePriceToBigDecimal(price.trim())
 
-        val whisky = Whisky(name.trim(), description.trim(), parsedAlcohol, parsedLiter, parsedPrice, Instant.now())
+        val whisky = Whisky(name.trim(), description.trim(), parsedAlcohol, parsedLiter, parsedPrice, Instant.now(), source)
 
         return whisky
     }

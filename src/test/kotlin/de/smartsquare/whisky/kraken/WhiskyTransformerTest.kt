@@ -17,13 +17,14 @@ class WhiskyTransformerTest {
         val alcohol = " 40.00% Vol"
         val priceElement = "32,95 €"
 
-        val whisky = WhiskyTransformer.transform(name, description, liter, alcohol, priceElement)
+        val whisky = WhiskyTransformer.transform(name, description, liter, alcohol, priceElement, "test")
 
         assertThat(whisky.name).isEqualTo("Aberfeldy")
         assertThat(whisky.description).isEqualTo("12 Jahre")
         assertThat(whisky.liter).isEqualTo(0.70)
         assertThat(whisky.alcohol).isEqualTo(40.00)
         assertThat(whisky.price).isEqualTo(BigDecimal.valueOf(32.95))
+        assertThat(whisky.source).isEqualTo("test")
     }
 
     @Test
@@ -34,12 +35,13 @@ class WhiskyTransformerTest {
         val alcohol = " 40.00% Vol"
         val priceElement = "2.895,00 €"
 
-        val whisky = WhiskyTransformer.transform(name, description, liter, alcohol, priceElement)
+        val whisky = WhiskyTransformer.transform(name, description, liter, alcohol, priceElement, "test")
 
         assertThat(whisky.name).isEqualTo("Glenlivet")
         assertThat(whisky.description).isEqualTo("Jahrgang 1948 in Holzbox mit Zertifikat")
         assertThat(whisky.liter).isEqualTo(0.70)
         assertThat(whisky.alcohol).isEqualTo(40.00)
         assertThat(whisky.price).isEqualTo(BigDecimal.valueOf(2895.00).setScale(2))
+        assertThat(whisky.source).isEqualTo("test")
     }
 }
