@@ -6,12 +6,7 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB
 import com.amazonaws.services.dynamodbv2.document.Item
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap
-import com.amazonaws.services.dynamodbv2.model.AttributeDefinition
-import com.amazonaws.services.dynamodbv2.model.KeySchemaElement
-import com.amazonaws.services.dynamodbv2.model.KeyType
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput
-import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException
-import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType
+import com.amazonaws.services.dynamodbv2.model.*
 import de.smartsquare.whisky.domain.Whisky
 import org.apache.logging.log4j.LogManager
 import java.math.BigDecimal
@@ -73,6 +68,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
         table.putItem(Item()
                 .withPrimaryKey("id_name", key, "id_scrapingDate", scrappingMillis)
                 .withString("whiskyName", name)
+                .withInt("age", whisky.age)
                 .withString("description", description)
                 .apply { if (whisky.alcohol != null) withDouble("alcohol", whisky.alcohol) }
                 .apply { if (whisky.liter != null) withDouble("liter", whisky.liter) }
@@ -97,6 +93,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
         return table.query(spec).map { item ->
             Whisky(
                     item.getString("whiskyName"),
+                    item.getInt("age"),
                     item.getString("description"),
                     item.getDouble("alcohol"),
                     item.getDouble("liter"),

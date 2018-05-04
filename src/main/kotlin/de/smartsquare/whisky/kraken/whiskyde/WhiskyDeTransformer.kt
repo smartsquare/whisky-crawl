@@ -1,11 +1,12 @@
 package de.smartsquare.whisky.kraken.whiskyde
 
+import de.smartsquare.whisky.AgeExtractor
 import de.smartsquare.whisky.domain.Whisky
 import de.smartsquare.whisky.kraken.WhiskyTransformer
 import org.apache.logging.log4j.LogManager
 import org.jsoup.nodes.Element
 
-class WhiskyDeTransformer {
+class WhiskyDeTransformer(val ageExtractor: AgeExtractor = AgeExtractor()) {
 
     val log = LogManager.getLogger()
 
@@ -17,7 +18,9 @@ class WhiskyDeTransformer {
             val liter = product.select(".article-amount > span").getOrNull(0)?.text()
             val price = product.selectFirst(".article-price-default").text()
 
-            WhiskyTransformer.transform(name, description, liter, alcohol, price, "WhiskyDe")
+            val age = ageExtractor.parseAge(name)
+
+            WhiskyTransformer.transform(name, age, description, liter, alcohol, price, "WhiskyDe")
         } catch (e: NullPointerException) {
             null
         }

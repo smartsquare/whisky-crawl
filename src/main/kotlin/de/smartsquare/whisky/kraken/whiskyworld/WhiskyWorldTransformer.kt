@@ -1,5 +1,6 @@
 package de.smartsquare.whisky.kraken.whiskyworld
 
+import de.smartsquare.whisky.AgeExtractor
 import de.smartsquare.whisky.domain.Whisky
 import de.smartsquare.whisky.kraken.WhiskyTransformer
 import org.jsoup.nodes.Element
@@ -7,7 +8,7 @@ import org.jsoup.nodes.Element
 /**
  *
  */
-class WhiskyWorldTransformer {
+class WhiskyWorldTransformer(val ageExtractor: AgeExtractor = AgeExtractor()) {
 
     fun transform(product: Element): Whisky? {
         return try {
@@ -19,7 +20,9 @@ class WhiskyWorldTransformer {
 
             val (liter, alcohol) = contents.split("/").let { it.first() to it.last() }
 
-            WhiskyTransformer.transform(name, description, liter, alcohol, price, "WhiskyWorld")
+            val age = ageExtractor.parseAge(description)
+
+            WhiskyTransformer.transform(name, age, description, liter, alcohol, price, "WhiskyWorld")
         } catch (e: NullPointerException) {
             null
         }
