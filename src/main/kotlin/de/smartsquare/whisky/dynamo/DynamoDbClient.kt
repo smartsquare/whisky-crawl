@@ -76,7 +76,8 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
                 .withString("description", description)
                 .apply { if (whisky.alcohol != null) withDouble("alcohol", whisky.alcohol) }
                 .apply { if (whisky.liter != null) withDouble("liter", whisky.liter) }
-                .withDouble("price", whisky.price.toDouble()))
+                .withDouble("price", whisky.price.toDouble())
+                .withString("source", whisky.source))
 
         log.info("PutItem succeeded: $name ")
     }
