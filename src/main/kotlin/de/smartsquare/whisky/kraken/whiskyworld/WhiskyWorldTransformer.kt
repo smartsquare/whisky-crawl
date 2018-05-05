@@ -2,13 +2,15 @@ package de.smartsquare.whisky.kraken.whiskyworld
 
 import de.smartsquare.whisky.domain.Whisky
 import de.smartsquare.whisky.kraken.WhiskyTransformer
+import org.apache.logging.log4j.LogManager
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-
 /**
  *
  */
 class WhiskyWorldTransformer {
+
+    val log = LogManager.getLogger()
 
     fun transform(product: Element): Whisky {
 
@@ -25,14 +27,23 @@ class WhiskyWorldTransformer {
 
         val productProperties = product.select(".product-properties").first()
 
-
-        val distillery = productProperties.getElementsContainingOwnText("Lebensmittel-Unternehmer").first().nextElementSibling().text()
+        val distillery = getDistillery(productProperties)
 
         return WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, price, "WhiskyWorld")
     }
 
+    private fun getDistillery(productProperties: Element): String {
+        val distillery = productProperties.getElementsContainingOwnText("Lebensmittel-Unternehmer")
+        if (distillery != null && distillery.size > 0) {
+            return distillery.first().nextElementSibling().text()
+        }
+
+        return ""
+    }
+
+
     private fun parseAge(ageElement: Elements?): Int {
-        if (ageElement != null) {
+        if (ageElement != null && ageElement.size > 0) {
             val ageText = ageElement.first().nextElementSibling().text()
             return ageText.removeSuffix("Jahre").trim().toInt()
         }
@@ -40,3 +51,4 @@ class WhiskyWorldTransformer {
         return 0
     }
 }
+
