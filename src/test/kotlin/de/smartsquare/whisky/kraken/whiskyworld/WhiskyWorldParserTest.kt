@@ -1,5 +1,6 @@
 package de.smartsquare.whisky.kraken.whiskyworld
 
+import de.smartsquare.whisky.domain.Whisky
 import org.assertj.core.api.Assertions.assertThat
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Test
@@ -13,15 +14,16 @@ class WhiskyWorldParserTest {
     @Test
     fun should_parse_html_page() {
         // given
-        val html = File("src/test/resources/html/webpage_all_sorts_p1.html")
+        val html = File("src/test/resources/html/webpage_product_detail.html")
         val document = Jsoup.parse(html, StandardCharsets.UTF_8.displayName())
 
         // when
-        val whiskyList = parser.readWhiskyListFromHtmlDocument(document)
+        val whisky: Whisky = parser.readWhiskyFromProductDetailHtmlDocument(document)
 
         // then
-        assertThat(whiskyList).isNotNull
-        assertThat(whiskyList).hasSize(36)
+        assertThat(whisky).isNotNull
+        assertThat(whisky.name).isEqualTo("Aberlour 12 Jahre Non Chill-Filtered")
+        assertThat(whisky.age).isEqualTo(12)
     }
 
     @Test

@@ -8,7 +8,8 @@ import java.time.Instant
 object WhiskyTransformer {
 
     fun transform(name: String, distillery: String, age: Int, description: String, liter: String?, alcohol: String?, price: String, source: String): Whisky {
-        val parsedAlcohol = alcohol?.trim()?.toLowerCase()?.removeSuffix("% vol")?.trim()?.replace(",", ".")?.toDouble()
+
+        val parsedAlcohol = alcohol?.trim()?.toLowerCase()?.removeSuffix("%")?.removeSuffix("% vol")?.trim()?.replace(",", ".")?.toDouble()
         val parsedLiter = liter?.trim()?.toLowerCase()?.removeSuffix("liter")?.trim()?.replace(",", ".")?.toDouble()
 
         val parsedPrice = normalizePriceToBigDecimal(price.trim())

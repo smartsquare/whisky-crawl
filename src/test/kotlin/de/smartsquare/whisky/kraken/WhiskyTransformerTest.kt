@@ -19,7 +19,7 @@ class WhiskyTransformerTest {
         val age = 12
         val distillery = "John Dewar and Sons Ltd. Aberfeldy Perthshire PH 15 2EB/GB"
 
-        val whisky = WhiskyTransformer.transform(name,distillery, age, description, liter, alcohol, priceElement, "test")
+        val whisky = WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, priceElement, "test")
 
         assertThat(whisky.name).isEqualTo("Aberfeldy")
         assertThat(whisky.distillery).isEqualTo(distillery)
@@ -41,7 +41,7 @@ class WhiskyTransformerTest {
         val age = 0
         val distillery = "John Dewar and Sons Ltd. Aberfeldy Perthshire PH 15 2EB/GB"
 
-        val whisky = WhiskyTransformer.transform(name,distillery, age, description, liter, alcohol, priceElement, "test")
+        val whisky = WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, priceElement, "test")
 
         assertThat(whisky.name).isEqualTo("Glenlivet")
         assertThat(whisky.distillery).isEqualTo(distillery)

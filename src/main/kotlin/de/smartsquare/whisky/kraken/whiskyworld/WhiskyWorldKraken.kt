@@ -8,24 +8,37 @@ import java.util.stream.Collectors
 class WhiskyWorldKraken(val parser: WhiskyWorldParser = WhiskyWorldParser(),
                         val jsoup: JsoupWrapper = JsoupWrapper()) : Kraken {
 
-    val baseUrl = "https://www.whiskyworld.de/alle-whiskies"
+    val baseUrl = "https://www.whiskyworld.de"
+    val productPage = "/alle-whiskies"
 
     override fun crawlWhiskyPage(): List<Whisky> {
 
-        val doc = jsoup.readWebPage(baseUrl)
+        val doc = jsoup.readWebPage(baseUrl + productPage)
         val paginationLinksFromBaseUrl = parser.getPaginationLinks(doc)
 
-        val allWhiskys: List<List<Whisky>> = paginationLinksFromBaseUrl
+        val allProductDetailLinks: List<List<String>> = paginationLinksFromBaseUrl
                 .parallelStream()
-                .map { subLink -> crawl(subLink) }
+                .map { subLink -> crawlProductDetailPages(subLink) }
                 .collect(Collectors.toList())
 
-        return allWhiskys.flatten()
+        val allWhiskys: List<Whisky> = allProductDetailLinks
+                .flatten()
+                .parallelStream()
+                .map { link -> baseUrl + link }
+                .map { link -> crawl(link) }
+                .collect(Collectors.toList())
+
+        return allWhiskys
     }
 
-    private fun crawl(subLink: String): List<Whisky> {
+    private fun crawlProductDetailPages(subLink: String): List<String> {
         val doc = jsoup.readWebPage(subLink)
-        return parser.readWhiskyListFromHtmlDocument(doc)
+        return parser.readProductDetailLinks(doc)
+    }
+
+    private fun crawl(subLink: String): Whisky {
+        val doc = jsoup.readWebPage(subLink)
+        return parser.readWhiskyFromProductDetailHtmlDocument(doc)
     }
 
 

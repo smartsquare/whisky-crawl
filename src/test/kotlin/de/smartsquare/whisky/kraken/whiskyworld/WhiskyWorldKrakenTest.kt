@@ -26,7 +26,8 @@ class WhiskyWorldKrakenTest {
     fun setUp() {
         every { jsoup.readWebPage(any()) } returns Document("foo://baa")
         every { parser.getPaginationLinks(any()) } returns listOf("subLink1", "subLink2")
-        every { parser.readWhiskyListFromHtmlDocument(any()) } returns listOf(WhiskyTestData.whisky1, WhiskyTestData.whisky2)
+        every { parser.readWhiskyFromProductDetailHtmlDocument(any()) } returns WhiskyTestData.whisky1
+        every { parser.readProductDetailLinks(any()) } returns listOf("productDetail1", "productDetail2")
     }
 
     @Test
@@ -41,6 +42,7 @@ class WhiskyWorldKrakenTest {
 
         assertThat(whiskys).hasSize(4) // returns 2 whiskys for each sublink
         verify(exactly = 1) { parser.getPaginationLinks(any()) }
-        verify(exactly = 2) { parser.readWhiskyListFromHtmlDocument(any()) }
+        verify(exactly = 2) { parser.readProductDetailLinks(any()) }
+        verify(exactly = 4) { parser.readWhiskyFromProductDetailHtmlDocument(any()) }
     }
 }

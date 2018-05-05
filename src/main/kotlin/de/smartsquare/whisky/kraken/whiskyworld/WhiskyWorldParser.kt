@@ -5,9 +5,9 @@ import org.jsoup.nodes.Document
 
 class WhiskyWorldParser(val transformer: WhiskyWorldTransformer = WhiskyWorldTransformer()) {
 
-    fun readWhiskyListFromHtmlDocument(document: Document): List<Whisky> {
-        val products = document.select(".product-item a")
-        return products.map { product -> transformer.transform(product) }.toList().filterNotNull()
+    fun readWhiskyFromProductDetailHtmlDocument(document: Document): Whisky {
+        val product = document.getElementsByAttributeValue("itemtype", "http://schema.org/Product").first()
+        return transformer.transform(product)
     }
 
     fun getPaginationLinks(document: Document): List<String> {
@@ -30,5 +30,10 @@ class WhiskyWorldParser(val transformer: WhiskyWorldTransformer = WhiskyWorldTra
                 .toList()
 
         return links
+    }
+
+    fun readProductDetailLinks(doc: Document): List<String> {
+        val productDetail = doc.select(".product-item a").map { link -> link.attr("href") }.toList()
+        return productDetail
     }
 }

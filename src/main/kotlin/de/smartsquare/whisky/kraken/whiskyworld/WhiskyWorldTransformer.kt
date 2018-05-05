@@ -1,32 +1,42 @@
 package de.smartsquare.whisky.kraken.whiskyworld
 
-import de.smartsquare.whisky.AgeExtractor
 import de.smartsquare.whisky.domain.Whisky
 import de.smartsquare.whisky.kraken.WhiskyTransformer
 import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 
 /**
  *
  */
-class WhiskyWorldTransformer(val ageExtractor: AgeExtractor = AgeExtractor()) {
+class WhiskyWorldTransformer {
 
-    fun transform(product: Element): Whisky? {
-        return try {
-            val name = product.select(".product-infobox h3").text()
-            val description = product.select(".product-infobox .item-description").text()
-            val price = product.select(".item-bottom .price .uvp").text()
+    fun transform(product: Element): Whisky {
 
-            val contents = product.select(".product-infobox .item-inh").text()
+        val name = product.getElementsByAttributeValue("itemprop", "name").first().text()
+        val description = product.select(".description").text()
+        val price = product.select(".price").first().text()
 
-            val (liter, alcohol) = contents.split("/").let { it.first() to it.last() }
+        val productCharacteristics = product.select(".product-characteristics").first()
+        val liter = productCharacteristics.getElementsContainingOwnText("Inhalt").first().nextElementSibling().text()
+        val alcohol = productCharacteristics.getElementsContainingOwnText("Vol%").first().nextElementSibling().text()
+        val ageElement = productCharacteristics.getElementsContainingOwnText("Alter")
 
-            val age = ageExtractor.parseAge(description)
+        val age = parseAge(ageElement)
 
-            val distillery = ""
+        val productProperties = product.select(".product-properties").first()
 
-            WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, price, "WhiskyWorld")
-        } catch (e: NullPointerException) {
-            null
+
+        val distillery = productProperties.getElementsContainingOwnText("Lebensmittel-Unternehmer").first().nextElementSibling().text()
+
+        return WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, price, "WhiskyWorld")
+    }
+
+    private fun parseAge(ageElement: Elements?): Int {
+        if (ageElement != null) {
+            val ageText = ageElement.first().nextElementSibling().text()
+            return ageText.removeSuffix("Jahre").trim().toInt()
         }
+
+        return 0
     }
 }
