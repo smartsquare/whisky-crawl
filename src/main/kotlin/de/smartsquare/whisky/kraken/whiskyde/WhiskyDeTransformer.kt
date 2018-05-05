@@ -17,10 +17,11 @@ class WhiskyDeTransformer(val ageExtractor: AgeExtractor = AgeExtractor()) {
             val alcohol = product.select(".article-amount > span").getOrNull(1)?.text()
             val liter = product.select(".article-amount > span").getOrNull(0)?.text()
             val price = product.selectFirst(".article-price-default").text()
+            val distillery = product.selectFirst(".article-company").text()
 
             val age = ageExtractor.parseAge(name)
 
-            WhiskyTransformer.transform(name, age, description, liter, alcohol, price, "WhiskyDe")
+            WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, price, "WhiskyDe")
         } catch (e: NullPointerException) {
             null
         }

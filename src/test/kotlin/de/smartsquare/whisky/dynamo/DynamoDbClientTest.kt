@@ -34,7 +34,7 @@ class DynamoDbClientTest {
 
     @Test
     fun should_write_whisky_object_to_dynamo() {
-        val whisky = Whisky("Aberfeldy", 12, "12 Jahre", 40.0, 0.7, BigDecimal.valueOf(35.40), Instant.now(), "test")
+        val whisky = Whisky("Aberfeldy", "John Dewar and Sons Ltd. Aberfeldy Perthshire PH 15 2EB/GB",12, "12 Jahre", 40.0, 0.7, BigDecimal.valueOf(35.40), Instant.now(), "test")
 
         val dynamo = DynamoDbClient(DynamoDbClient.create())
         dynamo.createInitialTable()

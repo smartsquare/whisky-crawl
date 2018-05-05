@@ -68,6 +68,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
         table.putItem(Item()
                 .withPrimaryKey("id_name", key, "id_scrapingDate", scrappingMillis)
                 .withString("whiskyName", name)
+                .withString("distillery", whisky.distillery)
                 .withInt("age", whisky.age)
                 .withString("description", description)
                 .apply { if (whisky.alcohol != null) withDouble("alcohol", whisky.alcohol) }
@@ -93,6 +94,7 @@ class DynamoDbClient(val dynamoDB: DynamoDB) {
         return table.query(spec).map { item ->
             Whisky(
                     item.getString("whiskyName"),
+                    item.getString("distillery"),
                     item.getInt("age"),
                     item.getString("description"),
                     item.getDouble("alcohol"),

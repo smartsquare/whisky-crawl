@@ -4,18 +4,16 @@ import de.smartsquare.whisky.domain.Whisky
 import java.math.BigDecimal
 import java.time.Instant
 
-/**
- * @author Ruben Gees
- */
+
 object WhiskyTransformer {
 
-    fun transform(name: String, age: Int, description: String, liter: String?, alcohol: String?, price: String, source: String): Whisky {
+    fun transform(name: String, distillery: String, age: Int, description: String, liter: String?, alcohol: String?, price: String, source: String): Whisky {
         val parsedAlcohol = alcohol?.trim()?.toLowerCase()?.removeSuffix("% vol")?.trim()?.replace(",", ".")?.toDouble()
         val parsedLiter = liter?.trim()?.toLowerCase()?.removeSuffix("liter")?.trim()?.replace(",", ".")?.toDouble()
 
         val parsedPrice = normalizePriceToBigDecimal(price.trim())
 
-        val whisky = Whisky(name.trim(), age, description.trim(), parsedAlcohol, parsedLiter, parsedPrice, Instant.now(), source)
+        val whisky = Whisky(name.trim(), distillery.trim(), age, description.trim(), parsedAlcohol, parsedLiter, parsedPrice, Instant.now(), source)
 
         return whisky
     }

@@ -22,7 +22,9 @@ class WhiskyWorldTransformer(val ageExtractor: AgeExtractor = AgeExtractor()) {
 
             val age = ageExtractor.parseAge(description)
 
-            WhiskyTransformer.transform(name, age, description, liter, alcohol, price, "WhiskyWorld")
+            val distillery = ""
+
+            WhiskyTransformer.transform(name, distillery, age, description, liter, alcohol, price, "WhiskyWorld")
         } catch (e: NullPointerException) {
             null
         }

@@ -16,17 +16,18 @@ val log = LogManager.getLogger()
 fun main(args: Array<String>) {
     val whiskyKraken = WhiskyKraken()
 
-
+    val startWhiskyWorld = System.currentTimeMillis()
     log.info("Crawling Whisky world")
     val whiskyWorldList = whiskyKraken.collectWhiskyInformationFrom("WhiskyWorld")
     writeToFile(whiskyWorldList, "whiskyworld.json")
+    log.info("{}s", (System.currentTimeMillis() - startWhiskyWorld)/1000)
 
-    val start = System.currentTimeMillis()
+    val startWhiskyDe = System.currentTimeMillis()
     log.info("Crawling Whisky.de")
 
     val whiskyDeList = whiskyKraken.collectWhiskyInformationFrom("WhiskyDe")
     writeToFile(whiskyDeList, "whiskyde.json")
-    log.info(System.currentTimeMillis() - start)
+    log.info("{}s", (System.currentTimeMillis() - startWhiskyDe)/1000)
 
 }
 
