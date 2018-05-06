@@ -20,15 +20,16 @@ fun main(args: Array<String>) {
     log.info("Crawling Whisky world")
     val whiskyWorldList = whiskyKraken.collectWhiskyInformationFrom("WhiskyWorld")
     writeToFile(whiskyWorldList, "whiskyworld.json")
-    log.info("{}s", (System.currentTimeMillis() - startWhiskyWorld)/1000)
+    log.info("Whiskys {} in {}s", whiskyWorldList.size, (System.currentTimeMillis() - startWhiskyWorld) / 1000)
 
     val startWhiskyDe = System.currentTimeMillis()
     log.info("Crawling Whisky.de")
 
     val whiskyDeList = whiskyKraken.collectWhiskyInformationFrom("WhiskyDe")
     writeToFile(whiskyDeList, "whiskyde.json")
-    log.info("{}s", (System.currentTimeMillis() - startWhiskyDe)/1000)
+    log.info("Whiskys {} in {}s", whiskyDeList.size, (System.currentTimeMillis() - startWhiskyDe) / 1000)
 
+    log.info("Finished")
 }
 
 private fun writeToFile(whiskyList: List<Whisky>, fileName: String) {
